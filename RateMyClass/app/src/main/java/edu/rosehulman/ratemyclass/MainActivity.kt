@@ -21,9 +21,12 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
+        goToSearchPage()
+
         nav_view.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> {
+                    goToSearchPage()
                     true
 
                 }
@@ -53,5 +56,14 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun goToSearchPage() {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, SearchFragment())
+        while (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStackImmediate()
+        }
+        ft.commit()
     }
 }

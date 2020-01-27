@@ -4,7 +4,11 @@
     <string name="menu_search">Search</string>
     <string name="menu_dept">Department</string>
     <string name="menu_profile">Profile</string>
+    <string name="class_search">Class Search</string>
+    <string name="search_for_a_course">Search For a Course</string>
+    <string name="submit">Submit</string>
     <string name="user_name">User Name</string>
     <string name="taken_with">Taken with:</string>
     <string name="professor_name">Professor name</string>
+
 </resources>
