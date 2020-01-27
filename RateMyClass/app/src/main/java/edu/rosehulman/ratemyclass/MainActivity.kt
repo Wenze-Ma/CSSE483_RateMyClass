@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity(),
         while (supportFragmentManager.backStackEntryCount > 0) {
             supportFragmentManager.popBackStackImmediate()
         }
+        ft.addToBackStack("detail")
         ft.commit()
     }
 

@@ -17,9 +17,9 @@ class DepartmentListAdapter (var context: Context?,
         temp.add(Course("3", 1, ArrayList()))
         temp.add(Course("4", 1, ArrayList()))
         departments.add(Department("Computer Science & Software Engineering", "CSSE", temp))
-        departments.add(Department("Mathematics", "MA", ArrayList()))
-        departments.add(Department("Computer Engineering", "CPE", ArrayList()))
-        departments.add(Department("Mechanical Engineering", "ME", ArrayList()))
+        departments.add(Department("Mathematics", "MA", temp))
+        departments.add(Department("Computer Engineering", "CPE", temp))
+        departments.add(Department("Mechanical Engineering", "ME", temp))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DepartmentViewHolder {
