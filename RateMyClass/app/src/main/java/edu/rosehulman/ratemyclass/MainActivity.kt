@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity(),
                 else -> false
             }
         }
+
+        fab.hide()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
