@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class DepartmentListFragment : Fragment() {
 
@@ -16,8 +18,12 @@ class DepartmentListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_department_list, container, false)
+        val recyclerView = inflater.inflate(R.layout.fragment_department_list, container, false) as RecyclerView
+        val adapter = DepartmentListAdapter(context, listener!!)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.setHasFixedSize(true)
+        return recyclerView
     }
 
     override fun onAttach(context: Context) {
@@ -35,7 +41,6 @@ class DepartmentListFragment : Fragment() {
     }
 
     interface OnDepartmentSelectedListener {
-        // TODO: Update argument type and name
         fun onDepartmentSelected(dept: Department)
     }
 }

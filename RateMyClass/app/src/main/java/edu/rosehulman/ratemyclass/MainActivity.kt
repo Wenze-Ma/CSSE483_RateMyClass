@@ -1,6 +1,7 @@
 package edu.rosehulman.ratemyclass
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -9,18 +10,12 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DepartmentListFragment.OnDepartmentSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         goToSearchPage()
 
         nav_view.setOnNavigationItemSelectedListener {
@@ -31,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.navigation_dashboard -> {
+                    goToDeptPage()
                     true
                 }
                 R.id.navigation_notifications -> {
@@ -65,5 +61,18 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.popBackStackImmediate()
         }
         ft.commit()
+    }
+
+    private fun goToDeptPage() {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, DepartmentListFragment())
+        while (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStackImmediate()
+        }
+        ft.commit()
+    }
+
+    override fun onDepartmentSelected(dept: Department) {
+        Log.d("AAA", "Document selected: ${dept.name}")
     }
 }
