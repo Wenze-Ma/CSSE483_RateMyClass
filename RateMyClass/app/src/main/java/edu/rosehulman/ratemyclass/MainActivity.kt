@@ -10,7 +10,9 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity(), DepartmentListFragment.OnDepartmentSelectedListener {
+class MainActivity : AppCompatActivity(),
+                     DepartmentListFragment.OnDepartmentSelectedListener,
+                     CourseListFragment.OnCourseSelectedListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +74,21 @@ class MainActivity : AppCompatActivity(), DepartmentListFragment.OnDepartmentSel
         ft.commit()
     }
 
+    private fun goToCoursePage(dept: Department) {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, CourseListFragment(dept))
+        while (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStackImmediate()
+        }
+        ft.commit()
+    }
+
     override fun onDepartmentSelected(dept: Department) {
         Log.d("AAA", "Document selected: ${dept.name}")
+        goToCoursePage(dept)
+    }
+
+    override fun onCourseSelected(dept: Department, course: Course) {
+        Log.d("AAA", "Document selected: ${course.name}")
     }
 }
