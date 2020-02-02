@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class DepartmentListFragment : Fragment() {
 
+    private lateinit var adapter: DepartmentListAdapter
     private var listener: OnDepartmentSelectedListener? = null
 
     override fun onCreateView(
@@ -19,10 +20,12 @@ class DepartmentListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val recyclerView = inflater.inflate(R.layout.fragment_department_list, container, false) as RecyclerView
-        val adapter = DepartmentListAdapter(context, listener!!)
+        adapter = DepartmentListAdapter(context, listener!!)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
+
+        adapter.addSnapshotListener()
         return recyclerView
     }
 

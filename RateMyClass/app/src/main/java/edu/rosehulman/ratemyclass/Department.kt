@@ -1,3 +1,19 @@
 package edu.rosehulman.ratemyclass
 
-data class Department (var name: String, var abbr: String, var courses: ArrayList<Course>)
+import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Exclude
+
+data class Department (var deptName: String = "", var abbr: String = "") {
+
+    @get:Exclude
+    var id = ""
+
+    companion object {
+        fun fromSnapshot(snapshot: DocumentSnapshot): Department{
+            val dept = snapshot.toObject(Department::class.java)!!
+            dept.id = snapshot.id
+            return dept
+        }
+    }
+}

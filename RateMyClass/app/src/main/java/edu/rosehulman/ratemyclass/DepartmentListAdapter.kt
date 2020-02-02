@@ -1,25 +1,41 @@
 package edu.rosehulman.ratemyclass
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.*
 
 class DepartmentListAdapter (var context: Context?,
                              var listener: DepartmentListFragment.OnDepartmentSelectedListener): RecyclerView.Adapter<DepartmentViewHolder>() {
 
     var departments = ArrayList<Department>()
-    var temp = ArrayList<Course>()
 
-    init {
-        temp.add(Course("1", 1, ArrayList()))
-        temp.add(Course("2", 1, ArrayList()))
-        temp.add(Course("3", 1, ArrayList()))
-        temp.add(Course("4", 1, ArrayList()))
-        departments.add(Department("Computer Science & Software Engineering", "CSSE", temp))
-        departments.add(Department("Mathematics", "MA", temp))
-        departments.add(Department("Computer Engineering", "CPE", temp))
-        departments.add(Department("Mechanical Engineering", "ME", temp))
+    private lateinit var listenerRegistration: ListenerRegistration
+
+    private val deptRef: CollectionReference = FirebaseFirestore
+        .getInstance()
+        .collection("Department")
+
+
+    fun addSnapshotListener() {
+        listenerRegistration = deptRef
+            .addSnapshotListener { querySnapshot, e ->
+                if (e != null) {
+                    Log.w("AAA", "listen error", e)
+                } else {
+                    processSnapshotChanges(querySnapshot!!)
+                }
+            }
+    }
+
+    private fun processSnapshotChanges(querySnapshot: QuerySnapshot) {
+        for (document in querySnapshot) {
+            val dept = Department.fromSnapshot(document)
+            departments.add(0, dept)
+            notifyItemInserted(0)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DepartmentViewHolder {

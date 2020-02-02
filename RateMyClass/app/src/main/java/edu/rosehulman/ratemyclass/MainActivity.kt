@@ -2,7 +2,6 @@ package edu.rosehulman.ratemyclass
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -87,11 +86,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onDepartmentSelected(dept: Department) {
-        Log.d("AAA", "Document selected: ${dept.name}")
+        Log.d("AAA", "Document selected: ${dept.deptName}")
         goToCoursePage(dept)
     }
 
     override fun onCourseSelected(dept: Department, course: Course) {
-        Log.d("AAA", "Document selected: ${course.name}")
+        Log.d("AAA", "Document selected: ${course.courseName}")
     }
 }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "809138275371",
+    "firebase_url": "https://csse483-ratemyclass.firebaseio.com",
+    "project_id": "csse483-ratemyclass",
+    "storage_bucket": "csse483-ratemyclass.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809138275371:android:2c337198665204c358966e",
+        "android_client_info": {
+          "package_name": "edu.rosehulman.ratemyclass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809138275371-r5611jpgu3i84obph8n09uij87vosgrf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxoEeoe7XWb6ZpxkvLy4B8g5F6luJo4yo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809138275371-r5611jpgu3i84obph8n09uij87vosgrf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -16,6 +16,6 @@ class CourseViewHolder(itemView: View, adapter: CourseListAdapter, context: Cont
     }
 
     fun bind(course: Course) {
-        name.text = course.name
+        name.text = course.dept + course.courseNumber
     }
 }
