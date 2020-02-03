@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_department_list.view.*
 
 class DepartmentListFragment : Fragment() {
 
@@ -19,14 +20,16 @@ class DepartmentListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val recyclerView = inflater.inflate(R.layout.fragment_department_list, container, false) as RecyclerView
+        val view = inflater.inflate(R.layout.fragment_department_list, container, false)
         adapter = DepartmentListAdapter(context, listener!!)
+        val recyclerView = view.dept_recycler_view
+        val textView = view.dept_text_view
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
 
         adapter.addSnapshotListener()
-        return recyclerView
+        return view
     }
 
     override fun onAttach(context: Context) {

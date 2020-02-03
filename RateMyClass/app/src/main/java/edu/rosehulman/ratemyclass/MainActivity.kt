@@ -55,11 +55,11 @@ class MainActivity : AppCompatActivity(),
         authStateListener = FirebaseAuth.AuthStateListener { auth: FirebaseAuth ->
             val user = auth.currentUser
             Log.d("AAA", "In auth listener, user = $user")
-//            if (user != null) {
+            if (user != null) {
                 goToSearchPage()
-//            } else {
-//                switchToSplashFragment()
-//            }
+            } else {
+                switchToSplashFragment()
+            }
         }
     }
 
@@ -139,17 +139,17 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onLoginButtonPressed() {
-//        val providers = arrayListOf(
-//            AuthUI.IdpConfig.EmailBuilder().build()
-//        )
-//
-//        val loginIntent =  AuthUI.getInstance()
-//            .createSignInIntentBuilder()
-//            .setAvailableProviders(providers)
-//            .setLogo(R.drawable.ic_launcher_custom)
-//            .build()
-//
-//        // Create and launch sign-in intent
-//        startActivityForResult(loginIntent, RC_SIGN_IN)
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build()
+        )
+
+        val loginIntent =  AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .setLogo(R.drawable.ic_launcher_custom)
+            .build()
+
+        // Create and launch sign-in intent
+        startActivityForResult(loginIntent, RC_SIGN_IN)
     }
 }
