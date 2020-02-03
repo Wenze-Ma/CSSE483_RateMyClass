@@ -5,13 +5,21 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(),
                      DepartmentListFragment.OnDepartmentSelectedListener,
-                     CourseListFragment.OnCourseSelectedListener{
+                     CourseListFragment.OnCourseSelectedListener,
+                     SplashFragment.OnLoginButtonPressedListener {
+
+    private val auth = FirebaseAuth.getInstance()
+    lateinit var authStateListener: FirebaseAuth.AuthStateListener
+
+    private val RC_SIGN_IN = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +41,42 @@ class MainActivity : AppCompatActivity(),
                 R.id.navigation_notifications -> {
                     goToProfilePage()
                     true
-
                 }
                 else -> false
             }
         }
 
+        initializeListeners()
+
         fab.hide()
+    }
+
+    private fun initializeListeners() {
+        authStateListener = FirebaseAuth.AuthStateListener { auth: FirebaseAuth ->
+            val user = auth.currentUser
+            Log.d("AAA", "In auth listener, user = $user")
+//            if (user != null) {
+                goToSearchPage()
+//            } else {
+//                switchToSplashFragment()
+//            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        auth.addAuthStateListener(authStateListener)
+    }
+    override fun onStop() {
+        super.onStop()
+        auth.removeAuthStateListener(authStateListener)
+    }
+
+
+    private fun switchToSplashFragment() {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, SplashFragment())
+        ft.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -99,5 +136,20 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCourseSelected(dept: Department, course: Course) {
         Log.d("AAA", "Document selected: ${course.courseName}")
+    }
+
+    override fun onLoginButtonPressed() {
+//        val providers = arrayListOf(
+//            AuthUI.IdpConfig.EmailBuilder().build()
+//        )
+//
+//        val loginIntent =  AuthUI.getInstance()
+//            .createSignInIntentBuilder()
+//            .setAvailableProviders(providers)
+//            .setLogo(R.drawable.ic_launcher_custom)
+//            .build()
+//
+//        // Create and launch sign-in intent
+//        startActivityForResult(loginIntent, RC_SIGN_IN)
     }
 }
