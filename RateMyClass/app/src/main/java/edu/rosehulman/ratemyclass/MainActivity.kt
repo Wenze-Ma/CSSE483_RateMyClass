@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity(),
                     true
                 }
                 R.id.navigation_notifications -> {
+                    goToProfilePage()
                     true
 
                 }
@@ -82,6 +83,12 @@ class MainActivity : AppCompatActivity(),
             supportFragmentManager.popBackStackImmediate()
         }
         ft.addToBackStack("detail")
+        ft.commit()
+    }
+
+    private fun goToProfilePage() {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, profileFragment())
         ft.commit()
     }
 

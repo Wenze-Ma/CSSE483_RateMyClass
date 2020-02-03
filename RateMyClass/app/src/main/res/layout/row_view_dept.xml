@@ -8,6 +8,8 @@
 
     <TextView
         android:id="@+id/dept_name"
+        android:padding="5dp"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:textAlignment="center"
         android:gravity="center"

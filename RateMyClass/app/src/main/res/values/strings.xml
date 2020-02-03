@@ -14,4 +14,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+    <string name="icon">Icon</string>
+    <string name="my_favorites">My Favorites</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="my_comments">My Comments</string>
+    <string name="manage_account">Manage Account</string>
+    <string name="username_rose_hulman_edu">username@rose-hulman.edu</string>
 </resources>
