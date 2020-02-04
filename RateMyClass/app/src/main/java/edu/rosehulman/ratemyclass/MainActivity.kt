@@ -136,6 +136,11 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCourseSelected(dept: Department, course: Course) {
         Log.d("AAA", "Document selected: ${course.courseName}")
+        val courseDetailFragment = CourseDetailFragment.newInstance(course)
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, courseDetailFragment)
+        ft.addToBackStack("detail")
+        ft.commit()
     }
 
     override fun onLoginButtonPressed() {
