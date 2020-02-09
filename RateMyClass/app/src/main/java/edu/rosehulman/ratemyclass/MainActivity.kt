@@ -1,15 +1,20 @@
 package edu.rosehulman.ratemyclass
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-
+import edu.rosehulman.rosefire.Rosefire
+import edu.rosehulman.rosefire.RosefireResult
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+
 
 class MainActivity : AppCompatActivity(),
                      DepartmentListFragment.OnDepartmentSelectedListener,
@@ -18,6 +23,10 @@ class MainActivity : AppCompatActivity(),
 
     private val auth = FirebaseAuth.getInstance()
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
+
+    private val RC_ROSEFIRE_LOGIN = 1001
+    private val REGISTRY_TOKEN = "acdd05d7-d0dc-4cdb-aee0-0f2dd3819559"
+
 
     private val RC_SIGN_IN = 1
 
@@ -55,11 +64,11 @@ class MainActivity : AppCompatActivity(),
         authStateListener = FirebaseAuth.AuthStateListener { auth: FirebaseAuth ->
             val user = auth.currentUser
             Log.d("AAA", "In auth listener, user = $user")
-            if (user != null) {
+//            if (user != null) {
                 goToSearchPage()
-            } else {
-                switchToSplashFragment()
-            }
+//            } else {
+//                switchToSplashFragment()
+//            }
         }
     }
 
@@ -136,7 +145,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCourseSelected(dept: Department, course: Course) {
         Log.d("AAA", "Document selected: ${course.courseName}")
-        val courseDetailFragment = CourseDetailFragment.newInstance(course)
+        val courseDetailFragment = CourseDetailFragment.newInstance(course, dept)
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container, courseDetailFragment)
         ft.addToBackStack("detail")
@@ -154,7 +163,25 @@ class MainActivity : AppCompatActivity(),
             .setLogo(R.drawable.ic_launcher_custom)
             .build()
 
+        val signInIntent: Intent = Rosefire.getSignInIntent(this, REGISTRY_TOKEN)
+        startActivityForResult(signInIntent, RC_ROSEFIRE_LOGIN)
+
         // Create and launch sign-in intent
-        startActivityForResult(loginIntent, RC_SIGN_IN)
+//        startActivityForResult(loginIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_ROSEFIRE_LOGIN) {
+            val result: RosefireResult = Rosefire.getSignInResultFromIntent(data)
+            if (!result.isSuccessful) {
+                Log.d("AAA", "The user cancelled the login")
+                return
+            }
+            FirebaseAuth.getInstance().signInWithCustomToken(result.token)
+                .addOnCompleteListener(this, OnCompleteListener {
+
+                })
+        }
     }
 }

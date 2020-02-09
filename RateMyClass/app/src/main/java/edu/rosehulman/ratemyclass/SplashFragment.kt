@@ -30,7 +30,7 @@ class SplashFragment : Fragment() {
         if (context is OnLoginButtonPressedListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnLoginButtonPressedListener")
+            throw RuntimeException("$context must implement OnLoginButtonPressedListener")
         }
     }
 

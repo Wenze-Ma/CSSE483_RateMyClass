@@ -1,10 +1,13 @@
 package edu.rosehulman.ratemyclass
 
+import android.os.Parcelable
 import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
+import kotlinx.android.parcel.Parcelize
 
-data class Department (var deptName: String = "", var abbr: String = "") {
+@Parcelize
+data class Department (var deptName: String = "", var abbr: String = ""): Parcelable {
 
     @get:Exclude
     var id = ""
