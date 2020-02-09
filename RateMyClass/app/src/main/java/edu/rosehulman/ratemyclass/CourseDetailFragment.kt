@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
 
 private const val ARG_COURSE = "course"
 private const val ARG_DEPT = "department"
@@ -28,6 +29,17 @@ class CourseDetailFragment : Fragment() {
                 }
             }
     }
+
+    override fun onStop() {
+        super.onStop()
+        activity!!.fab.hide()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        activity!!.fab.show()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
