@@ -5,6 +5,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.comment_view.view.*
+import kotlinx.android.synthetic.main.ratings_layout.view.*
 
 class CourseDetailViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val username = itemView.user_name as TextView
