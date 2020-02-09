@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/overall" />
+
+    <RatingBar
+        android:id="@+id/overall_rating"
+        style="@style/RMCRatingBar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/difficulty" />
+
+    <RatingBar
+        android:id="@+id/difficulty_rating"
+        style="@style/RMCRatingBar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/learning" />
+
+    <RatingBar
+        android:id="@+id/learning_rating"
+        style="@style/RMCRatingBar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/workload" />
+
+    <RatingBar
+        android:id="@+id/workload_rating"
+        style="@style/RMCRatingBar" />
+
+</LinearLayout>
