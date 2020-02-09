@@ -8,14 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_COURSE = "course"
 
 class CourseDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var course: Course? = null
-    private var listener: OnFragmentInteractionListener? = null
+//    private var listener: OnCourseSelectedListener? = null
 
     companion object {
         @JvmStatic
@@ -38,31 +35,24 @@ class CourseDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //TODO: Implement this function
         return inflater.inflate(R.layout.fragment_course_detail, container, false)
     }
 
-    fun onButtonPressed(uri: Uri) {
-        //TODO: Implement this method
-        listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        if (context is OnCourseSelectedListener) {
+//            listener = context
+//        } else {
+//            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+//        }
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        listener = null
+//    }
+//
+//    interface OnCourseSelectedListener {
+//        fun onCourseSelected(course: Course, dept: Department)
+//    }
 }
