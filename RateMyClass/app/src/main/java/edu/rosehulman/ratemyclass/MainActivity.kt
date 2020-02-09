@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity(),
                 R.id.navigation_home -> {
                     goToSearchPage()
                     true
-
                 }
                 R.id.navigation_dashboard -> {
                     goToDeptPage()
