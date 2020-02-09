@@ -26,4 +26,10 @@
     <string name="difficulty">Difficulty</string>
     <string name="learning">Learning</string>
     <string name="workload">Workload</string>
+    <string name="overall_add">Overall:</string>
+    <string name="difficulty_add">Difficulty:</string>
+    <string name="learning_add">Learning:</string>
+    <string name="workload_add">Workload:</string>
+    <string name="comment_add">Comment:</string>
+    <string name="take_with">Take with:</string>
 </resources>

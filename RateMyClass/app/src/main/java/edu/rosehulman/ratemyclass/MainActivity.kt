@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import edu.rosehulman.rosefire.Rosefire
 import edu.rosehulman.rosefire.RosefireResult
@@ -64,10 +65,11 @@ class MainActivity : AppCompatActivity(),
             val user = auth.currentUser
             Log.d("AAA", "In auth listener, user = $user")
 //            if (user != null) {
-                goToSearchPage()
+//                goToSearchPage()
 //            } else {
 //                switchToSplashFragment()
 //            }
+            goToSearchPage()
         }
     }
 
@@ -80,6 +82,9 @@ class MainActivity : AppCompatActivity(),
         auth.removeAuthStateListener(authStateListener)
     }
 
+    fun getFab(): FloatingActionButton {
+        return fab
+    }
 
     private fun switchToSplashFragment() {
         val ft = supportFragmentManager.beginTransaction()
@@ -173,14 +178,11 @@ class MainActivity : AppCompatActivity(),
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_ROSEFIRE_LOGIN) {
             val result: RosefireResult = Rosefire.getSignInResultFromIntent(data)
-            if (!result.isSuccessful) {
-                Log.d("AAA", "The user cancelled the login")
-                return
-            }
-            FirebaseAuth.getInstance().signInWithCustomToken(result.token)
-                .addOnCompleteListener(this, OnCompleteListener {
-
+            if (result.isSuccessful) {
+                auth.signInWithCustomToken(result.token).addOnCompleteListener(this, OnCompleteListener {
+                    Log.d("AAA", "Login succeeded")
                 })
+            }
         }
     }
 }
