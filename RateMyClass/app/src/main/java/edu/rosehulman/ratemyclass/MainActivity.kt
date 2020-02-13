@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import edu.rosehulman.rosefire.Rosefire
 import edu.rosehulman.rosefire.RosefireResult
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(),
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     private val RC_ROSEFIRE_LOGIN = 1001
-    private val REGISTRY_TOKEN = "acdd05d7-d0dc-4cdb-aee0-0f2dd3819559"
+    private val REGISTRY_TOKEN = "53a4fea9-cc87-44f4-9aae-209bf3891579"
 
 
     private val RC_SIGN_IN = 1
@@ -63,11 +64,14 @@ class MainActivity : AppCompatActivity(),
         authStateListener = FirebaseAuth.AuthStateListener { auth: FirebaseAuth ->
             val user = auth.currentUser
             Log.d("AAA", "In auth listener, user = $user")
-//            if (user != null) {
+            if (user != null) {
+                Log.d("AAA", user.uid)
+                User.username = user.uid
                 goToSearchPage()
-//            } else {
-//                switchToSplashFragment()
-//            }
+            } else {
+                switchToSplashFragment()
+            }
+//            goToSearchPage()
         }
     }
 
@@ -80,6 +84,9 @@ class MainActivity : AppCompatActivity(),
         auth.removeAuthStateListener(authStateListener)
     }
 
+    fun getFab(): FloatingActionButton {
+        return fab
+    }
 
     private fun switchToSplashFragment() {
         val ft = supportFragmentManager.beginTransaction()
@@ -152,15 +159,15 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onLoginButtonPressed() {
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build()
-        )
+//        val providers = arrayListOf(
+//            AuthUI.IdpConfig.EmailBuilder().build()
+//        )
 
-        val loginIntent =  AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setAvailableProviders(providers)
-            .setLogo(R.drawable.ic_launcher_custom)
-            .build()
+//        val loginIntent =  AuthUI.getInstance()
+//            .createSignInIntentBuilder()
+//            .setAvailableProviders(providers)
+//            .setLogo(R.drawable.ic_launcher_custom)
+//            .build()
 
         val signInIntent: Intent = Rosefire.getSignInIntent(this, REGISTRY_TOKEN)
         startActivityForResult(signInIntent, RC_ROSEFIRE_LOGIN)
@@ -173,14 +180,12 @@ class MainActivity : AppCompatActivity(),
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_ROSEFIRE_LOGIN) {
             val result: RosefireResult = Rosefire.getSignInResultFromIntent(data)
-            if (!result.isSuccessful) {
-                Log.d("AAA", "The user cancelled the login")
-                return
-            }
-            FirebaseAuth.getInstance().signInWithCustomToken(result.token)
-                .addOnCompleteListener(this, OnCompleteListener {
-
+            if (result.isSuccessful) {
+                Log.d("AAA", result.username)
+                auth.signInWithCustomToken(result.token).addOnCompleteListener(this, OnCompleteListener {
+                    Log.d("AAA", "Login succeeded")
                 })
+            }
         }
     }
 }

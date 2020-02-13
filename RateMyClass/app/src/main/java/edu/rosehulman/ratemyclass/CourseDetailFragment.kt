@@ -54,10 +54,15 @@ class CourseDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val recyclerView = inflater.inflate(R.layout.fragment_course_detail, container, false) as RecyclerView
-        val adapter = CourseDetailAdapter(context, dept!!, course!!)
+        val adapter = CourseDetailAdapter(context!!, dept!!, course!!)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
+
+        (context as MainActivity).getFab().setOnClickListener {
+            adapter.showAddEditDialog(-1)
+        }
+
         return recyclerView
     }
 
