@@ -88,7 +88,7 @@ class CourseDetailAdapter (var context: Context,
             val workload = view.workload_rating.rating.toString()
             val content = view.edit_comment.text.toString()
 
-            add(Comment("no log in yet", content, course.courseNumber, dept.abbr, difficulty, learning, overall, professor, workload))
+            add(Comment(User.username, content, course.courseNumber, dept.abbr, difficulty, learning, overall, professor, workload))
         }
 
         builder.setNegativeButton(android.R.string.cancel, null)

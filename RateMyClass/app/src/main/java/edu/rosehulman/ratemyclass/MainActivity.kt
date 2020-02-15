@@ -28,9 +28,6 @@ class MainActivity : AppCompatActivity(),
     private val RC_ROSEFIRE_LOGIN = 1001
     private val REGISTRY_TOKEN = "53a4fea9-cc87-44f4-9aae-209bf3891579"
 
-
-    private val RC_SIGN_IN = 1
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -67,11 +64,8 @@ class MainActivity : AppCompatActivity(),
             if (user != null) {
                 Log.d("AAA", user.uid)
                 User.username = user.uid
-                goToSearchPage()
-            } else {
-                switchToSplashFragment()
             }
-//            goToSearchPage()
+            goToSearchPage()
         }
     }
 
@@ -93,22 +87,6 @@ class MainActivity : AppCompatActivity(),
         ft.replace(R.id.fragment_container, SplashFragment())
         ft.commit()
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        return when (item.itemId) {
-//            R.id.action_settings -> true
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
 
     private fun goToSearchPage() {
         val ft = supportFragmentManager.beginTransaction()
@@ -139,9 +117,13 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun goToProfilePage() {
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_container, profileFragment())
-        ft.commit()
+        if (User.username != "") {
+            val ft = supportFragmentManager.beginTransaction()
+            ft.replace(R.id.fragment_container, profileFragment())
+            ft.commit()
+        } else {
+            switchToSplashFragment()
+        }
     }
 
     override fun onDepartmentSelected(dept: Department) {
@@ -159,21 +141,8 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onLoginButtonPressed() {
-//        val providers = arrayListOf(
-//            AuthUI.IdpConfig.EmailBuilder().build()
-//        )
-
-//        val loginIntent =  AuthUI.getInstance()
-//            .createSignInIntentBuilder()
-//            .setAvailableProviders(providers)
-//            .setLogo(R.drawable.ic_launcher_custom)
-//            .build()
-
         val signInIntent: Intent = Rosefire.getSignInIntent(this, REGISTRY_TOKEN)
         startActivityForResult(signInIntent, RC_ROSEFIRE_LOGIN)
-
-        // Create and launch sign-in intent
-//        startActivityForResult(loginIntent, RC_SIGN_IN)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -60,27 +60,11 @@ class CourseDetailFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
 
         (context as MainActivity).getFab().setOnClickListener {
-            adapter.showAddEditDialog(-1)
+            if (User.username != "") {
+                adapter.showAddEditDialog(-1)
+            }
         }
 
         return recyclerView
     }
-
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        if (context is OnCourseSelectedListener) {
-//            listener = context
-//        } else {
-//            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-//        }
-//    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
-//        listener = null
-//    }
-//
-//    interface OnCourseSelectedListener {
-//        fun onCourseSelected(course: Course, dept: Department)
-//    }
 }
