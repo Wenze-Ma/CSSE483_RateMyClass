@@ -14,11 +14,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 private const val ARG_COURSE = "course"
 private const val ARG_DEPT = "department"
 
-class CourseDetailFragment : Fragment() {
+class CourseDetailFragment: Fragment() {
     private var course: Course? = null
     private var dept: Department? = null
 //    private var listener: OnCourseSelectedListener? = null
-
     companion object {
         @JvmStatic
         fun newInstance(course: Course, dept: Department) =
@@ -62,6 +61,8 @@ class CourseDetailFragment : Fragment() {
         (context as MainActivity).getFab().setOnClickListener {
             if (User.username != "") {
                 adapter.showAddEditDialog(-1)
+            } else {
+                adapter.showErrorDialog()
             }
         }
 

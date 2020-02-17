@@ -11,6 +11,8 @@ import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import edu.rosehulman.rosefire.Rosefire
 import edu.rosehulman.rosefire.RosefireResult
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,13 +22,17 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity(),
                      DepartmentListFragment.OnDepartmentSelectedListener,
                      CourseListFragment.OnCourseSelectedListener,
-                     SplashFragment.OnLoginButtonPressedListener {
+                     SplashFragment.OnLoginButtonPressedListener,
+                     SearchFragment.OnSearchListener {
 
     private val auth = FirebaseAuth.getInstance()
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     private val RC_ROSEFIRE_LOGIN = 1001
     private val REGISTRY_TOKEN = "53a4fea9-cc87-44f4-9aae-209bf3891579"
+
+    private var course: Course? = null
+    private var department: Department? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,9 +112,9 @@ class MainActivity : AppCompatActivity(),
         ft.commit()
     }
 
-    private fun goToCoursePage(dept: Department) {
+    private fun goToCoursePage(dept: Department?, course: Course?) {
         val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_container, CourseListFragment(dept))
+        ft.replace(R.id.fragment_container, CourseListFragment(dept, course))
         while (supportFragmentManager.backStackEntryCount > 0) {
             supportFragmentManager.popBackStackImmediate()
         }
@@ -128,7 +134,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onDepartmentSelected(dept: Department) {
         Log.d("AAA", "Document selected: ${dept.deptName}")
-        goToCoursePage(dept)
+        goToCoursePage(dept, null)
     }
 
     override fun onCourseSelected(dept: Department, course: Course) {
@@ -156,5 +162,40 @@ class MainActivity : AppCompatActivity(),
                 })
             }
         }
+    }
+
+    override fun onClassSearched(classSearched: String) {
+        findCourse(classSearched)
+        Log.d("AAA", course.toString())
+        Log.d("AAA", department.toString())
+        if (department != null) {
+            goToCoursePage(department, course)
+        }
+    }
+
+    private fun findCourse(classSearched: String) {
+        val coursesRef: CollectionReference = FirebaseFirestore
+            .getInstance()
+            .collection("Course")
+
+        coursesRef.whereEqualTo("courseName", classSearched)
+            .get()
+            .addOnSuccessListener {documents ->
+                for (doc in documents) {
+                    course = Course.fromSnapshot(doc)
+                }
+            }
+        val deptRef: CollectionReference = FirebaseFirestore
+            .getInstance()
+            .collection("Department")
+
+        deptRef.whereEqualTo("abbr", course?.dept)
+            .get()
+            .addOnSuccessListener { documents->
+                for (doc in documents) {
+                    department = Department.fromSnapshot(doc)
+                }
+            }
+
     }
 }

@@ -13,13 +13,14 @@ data class Comment (var author: String = "",
                     var learning: String = "",
                     var overall: String = "",
                     var professor: String = "",
-                    var workload: String = "") {
+                    var workload: String = "",
+                    var like: Int = 0,
+                    var dislike: Int = 0) {
     @get:Exclude
     var id = ""
 
     @ServerTimestamp
     var timePosted: Timestamp? = null
-
 
     companion object {
         const val TIME_POSTED = "timePosted"

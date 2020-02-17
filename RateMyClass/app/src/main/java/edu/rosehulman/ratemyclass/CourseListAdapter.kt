@@ -11,7 +11,8 @@ import com.google.firebase.firestore.QuerySnapshot
 
 class CourseListAdapter (var context: Context?,
                          var listener: CourseListFragment.OnCourseSelectedListener,
-                         var dept: Department): RecyclerView.Adapter<CourseViewHolder>() {
+                         var dept: Department?,
+                         var course: Course?): RecyclerView.Adapter<CourseViewHolder>() {
 
     private val courses = ArrayList<Course>()
     private val coursesRef: CollectionReference = FirebaseFirestore
@@ -19,19 +20,23 @@ class CourseListAdapter (var context: Context?,
         .collection("Course")
 
     init {
-        coursesRef
-            .addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
-                if (exception != null) {
-                    return@addSnapshotListener
-                }
-                for (doc in snapshot!!) {
-                    val course = Course.fromSnapshot(doc)
-                    if (course.dept == dept.abbr) {
-                        courses.add(0, course)
-                        notifyItemInserted(0)
+        if (course == null) {
+            coursesRef
+                .addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+                    if (exception != null) {
+                        return@addSnapshotListener
+                    }
+                    for (doc in snapshot!!) {
+                        val course = Course.fromSnapshot(doc)
+                        if (course.dept == dept!!.abbr) {
+                            courses.add(0, course)
+                            notifyItemInserted(0)
+                        }
                     }
                 }
-            }
+        } else {
+            courses.add(0, course!!)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
@@ -47,6 +52,6 @@ class CourseListAdapter (var context: Context?,
 
     fun selectCourseAt(adapterPosition: Int) {
         val course = courses[adapterPosition]
-        listener.onCourseSelected(dept, course)
+        listener.onCourseSelected(dept!!, course)
     }
 }

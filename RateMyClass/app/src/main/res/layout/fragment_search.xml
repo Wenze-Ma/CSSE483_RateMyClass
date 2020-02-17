@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/search_for_a_course"
         android:layout_centerInParent="true"
-        android:maxLength="15"
+        android:maxLength="50"
         android:maxLines="1"
         android:textSize="24sp"/>
 

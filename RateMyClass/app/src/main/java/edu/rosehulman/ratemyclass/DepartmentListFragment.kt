@@ -23,7 +23,6 @@ class DepartmentListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_department_list, container, false)
         adapter = DepartmentListAdapter(context, listener!!)
         val recyclerView = view.dept_recycler_view
-        val textView = view.dept_text_view
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)

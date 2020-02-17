@@ -98,4 +98,15 @@ class CourseDetailAdapter (var context: Context,
     private fun add(comment: Comment) {
         commentsRef.add(comment)
     }
+
+    fun showErrorDialog() {
+        val builder = AlertDialog.Builder(context)
+        val view = LayoutInflater.from(context).inflate(R.layout.post_error, null, false)
+        builder.setView(view)
+        builder.setPositiveButton(android.R.string.ok) {_,_ ->
+
+        }
+        builder.setNegativeButton(android.R.string.cancel, null)
+        builder.create().show()
+    }
 }
