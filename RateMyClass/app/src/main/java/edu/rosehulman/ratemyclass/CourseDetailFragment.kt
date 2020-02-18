@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_course_detail.view.*
 
 private const val ARG_COURSE = "course"
 private const val ARG_DEPT = "department"
@@ -17,7 +18,7 @@ private const val ARG_DEPT = "department"
 class CourseDetailFragment: Fragment() {
     private var course: Course? = null
     private var dept: Department? = null
-//    private var listener: OnCourseSelectedListener? = null
+
     companion object {
         @JvmStatic
         fun newInstance(course: Course, dept: Department) =
@@ -52,8 +53,10 @@ class CourseDetailFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val recyclerView = inflater.inflate(R.layout.fragment_course_detail, container, false) as RecyclerView
+        val view = inflater.inflate(R.layout.fragment_course_detail, container, false)
+        val recyclerView = view.course_detail_recycler_view
         val adapter = CourseDetailAdapter(context!!, dept!!, course!!)
+        view.comment_text_view.text = "${course!!.courseName}:"
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
@@ -66,6 +69,6 @@ class CourseDetailFragment: Fragment() {
             }
         }
 
-        return recyclerView
+        return view
     }
 }

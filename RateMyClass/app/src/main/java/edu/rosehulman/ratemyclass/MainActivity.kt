@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity(),
                      DepartmentListFragment.OnDepartmentSelectedListener,
                      CourseListFragment.OnCourseSelectedListener,
                      SplashFragment.OnLoginButtonPressedListener,
-                     SearchFragment.OnSearchListener {
+                     SearchFragment.OnSearchListener,
+                     profileFragment.OnButtonClicked{
 
     private val auth = FirebaseAuth.getInstance()
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
@@ -197,5 +198,15 @@ class MainActivity : AppCompatActivity(),
                 }
             }
 
+    }
+
+    override fun onButtonClicked() {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, MyComments())
+        while (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStackImmediate()
+        }
+        ft.addToBackStack("detail")
+        ft.commit()
     }
 }

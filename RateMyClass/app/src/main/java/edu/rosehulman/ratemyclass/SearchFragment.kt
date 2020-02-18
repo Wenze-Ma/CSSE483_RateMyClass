@@ -31,7 +31,7 @@ class SearchFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is SearchFragment.OnSearchListener) {
+        if (context is OnSearchListener) {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
