@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity(),
                      CourseListFragment.OnCourseSelectedListener,
                      SplashFragment.OnLoginButtonPressedListener,
                      SearchFragment.OnSearchListener,
-                     profileFragment.OnButtonClicked{
+                     profileFragment.OnButtonClicked,
+                     CourseDetailFragment.OnOKButtonPressed{
 
     private val auth = FirebaseAuth.getInstance()
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
@@ -208,5 +209,9 @@ class MainActivity : AppCompatActivity(),
         }
         ft.addToBackStack("detail")
         ft.commit()
+    }
+
+    override fun onOKButtonPressed() {
+        goToProfilePage()
     }
 }

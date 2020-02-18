@@ -54,7 +54,4 @@ class profileFragment : Fragment() {
     interface OnButtonClicked {
         fun onButtonClicked()
     }
-
-
-
 }

@@ -19,6 +19,9 @@ class CourseDetailFragment: Fragment() {
     private var course: Course? = null
     private var dept: Department? = null
 
+    private var listener: OnOKButtonPressed? = null
+
+
     companion object {
         @JvmStatic
         fun newInstance(course: Course, dept: Department) =
@@ -65,10 +68,28 @@ class CourseDetailFragment: Fragment() {
             if (User.username != "") {
                 adapter.showAddEditDialog(-1)
             } else {
-                adapter.showErrorDialog()
+                adapter.showErrorDialog(listener)
             }
         }
 
         return view
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnOKButtonPressed) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    interface OnOKButtonPressed {
+        fun onOKButtonPressed()
     }
 }
