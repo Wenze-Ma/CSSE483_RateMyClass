@@ -27,6 +27,18 @@ class MainActivity : AppCompatActivity(),
                      profileFragment.OnButtonClicked,
                      CourseDetailFragment.OnOKButtonPressed{
 
+    private val initialImages: ArrayList<Int> = ArrayList()
+    init {
+        initialImages.add(R.drawable.random1)
+        initialImages.add(R.drawable.random2)
+        initialImages.add(R.drawable.random3)
+        initialImages.add(R.drawable.random4)
+        initialImages.add(R.drawable.random5)
+        initialImages.add(R.drawable.random6)
+        initialImages.add(R.drawable.random7)
+        initialImages.add(R.drawable.random8)
+    }
+
     private val auth = FirebaseAuth.getInstance()
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
@@ -72,6 +84,22 @@ class MainActivity : AppCompatActivity(),
             if (user != null) {
                 Log.d("AAA", user.uid)
                 User.username = user.uid
+                val usersRef: CollectionReference = FirebaseFirestore
+                    .getInstance()
+                    .collection("User")
+                var isFound = false
+                usersRef.get().addOnSuccessListener {
+                    for (doc in it) {
+                        val userInfo = UserInfo.fromSnapshot(doc)
+                        if (userInfo.username == User.username) {
+                            isFound = true
+                            break
+                        }
+                    }
+                    if (!isFound) {
+                        usersRef.add(UserInfo(User.username, initialImages[(Math.random() * 8).toInt()]))
+                    }
+                }
             }
             goToSearchPage()
         }
@@ -190,7 +218,6 @@ class MainActivity : AppCompatActivity(),
                         Log.d("AAA", course.toString())
                         Log.d("AAA", department.toString())
                         goToCoursePage(department, course)
-
                     }
 
             }
