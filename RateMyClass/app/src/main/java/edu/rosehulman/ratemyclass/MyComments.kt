@@ -19,10 +19,8 @@ class MyComments : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_my_comments, container, false)
         val recyclerView = view.my_comments_recycler_view
-        recyclerView.setOnClickListener {
-            Log.d("AAA", "pressed")
-        }
-        val adapter = MyCommentsAdapter(context!!)
+
+        val adapter = CourseDetailAdapter(context!!, Department("", ""), Course("", "", "", ""), true, null)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)

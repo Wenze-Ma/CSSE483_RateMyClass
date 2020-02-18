@@ -58,7 +58,7 @@ class CourseDetailFragment: Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_course_detail, container, false)
         val recyclerView = view.course_detail_recycler_view
-        val adapter = CourseDetailAdapter(context!!, dept!!, course!!)
+        val adapter = CourseDetailAdapter(context!!, dept!!, course!!, false, listener)
         view.comment_text_view.text = "${course!!.courseName}:"
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -68,7 +68,7 @@ class CourseDetailFragment: Fragment() {
             if (User.username != "") {
                 adapter.showAddEditDialog(-1)
             } else {
-                adapter.showErrorDialog(listener)
+                adapter.showErrorDialog(0)
             }
         }
 

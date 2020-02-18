@@ -15,7 +15,9 @@ data class Comment (var author: String = "",
                     var professor: String = "",
                     var workload: String = "",
                     var like: Int = 0,
-                    var dislike: Int = 0) {
+                    var dislike: Int = 0,
+                    var whoLikes: ArrayList<String> = ArrayList(),
+                    var whoDislikes: ArrayList<String> = ArrayList()) {
     @get:Exclude
     var id = ""
 

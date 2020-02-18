@@ -1,47 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
     <TextView
+        android:id="@+id/class_search_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/class_search"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="36sp"
-        android:id="@+id/class_search_title"
         android:layout_margin="10dp"
-        />
+        android:text="@string/class_search"
+        android:textSize="36sp" />
 
     <EditText
         android:id="@+id/class_searched"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search_for_a_course"
         android:layout_below="@+id/class_search_title"
+        android:layout_marginHorizontal="70dp"
         android:layout_centerHorizontal="true"
-        android:maxLength="50"
-        android:maxLines="1"
-        android:textSize="24sp"/>
+        android:hint="@string/search_for_a_course"
+        android:maxLines="2"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/submit"
         android:layout_below="@id/class_searched"
         android:layout_alignParentRight="true"
-         />
+        android:text="@string/submit" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/hint_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/submit"
-        android:background="@android:color/white"/>
+        android:background="@android:color/white" />
 
 </RelativeLayout>

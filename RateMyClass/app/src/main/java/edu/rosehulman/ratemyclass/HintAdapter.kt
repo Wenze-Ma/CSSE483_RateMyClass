@@ -26,7 +26,7 @@ class HintAdapter (var context: Context?, val input: String, var editText: EditT
                 }
                 for (doc in snapshot!!) {
                     val course = Course.fromSnapshot(doc)
-                    if (input != "" && input.toLowerCase() in course.courseName.toLowerCase()) {
+                    if (input != "" && input.toLowerCase() in course.courseName.toLowerCase() && input != course.courseName) {
                         courses.add(0, course)
                         notifyItemInserted(0)
                     }

@@ -32,8 +32,9 @@
     <string name="workload_add">Workload:</string>
     <string name="comment_add">Comment:</string>
     <string name="take_with">Take with:</string>
-    <string name="require_login">You are required to sign in before posting a comment. Do you want to log in now?</string>
     <string name="_0">0</string>
     <string name="choose_a_department">Choose a department:</string>
     <string name="comments_you_have_posted">Comments you have posted:</string>
+    <string name="error_msg_1">You are required to sign in before posting a comment. Do you want to log in now?</string>
+    <string name="error_msg_2">You are required to sign in before doing this. Do you want to log in now?</string>
 </resources>

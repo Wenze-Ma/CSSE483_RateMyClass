@@ -167,14 +167,6 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onClassSearched(classSearched: String) {
-        findCourse(classSearched)
-
-//        if (department != null && course != null) {
-//            goToCoursePage(department, course)
-//        }
-    }
-
-    private fun findCourse(classSearched: String) {
         val coursesRef: CollectionReference = FirebaseFirestore
             .getInstance()
             .collection("Course")
@@ -202,7 +194,6 @@ class MainActivity : AppCompatActivity(),
                     }
 
             }
-
     }
 
     override fun onButtonClicked() {
