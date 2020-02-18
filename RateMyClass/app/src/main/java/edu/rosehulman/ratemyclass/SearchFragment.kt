@@ -27,20 +27,22 @@ class SearchFragment : Fragment() {
         view.submit.setOnClickListener {
             listener?.onClassSearched(view.class_searched.text.toString())
         }
-        view.class_searched.setOnFocusChangeListener {_,_ ->
-            val layoutParams = view.class_searched.layoutParams as RelativeLayout.LayoutParams
-            if (view.class_searched.isFocused) {
-                layoutParams.addRule(RelativeLayout.BELOW, view.class_search_title.id)
-                view.class_searched.layoutParams = layoutParams
-            }
-
-        }
+        var adapter = HintAdapter(context, "", view.class_searched)
+        val recyclerView = view.hint_recycler_view
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.setHasFixedSize(true)
+//        view.class_searched.setOnFocusChangeListener {_,_ ->
+//            val layoutParams = view.class_searched.layoutParams as RelativeLayout.LayoutParams
+//            if (view.class_searched.isFocused) {
+//                layoutParams.addRule(RelativeLayout.BELOW, view.class_search_title.id)
+//                view.class_searched.layoutParams = layoutParams
+//            }
+//
+//        }
         view.class_searched.addTextChangedListener { text: Editable? ->
-            val adapter = HintAdapter(context, view.class_searched.text.toString(), view.class_searched)
-            val recyclerView = view.hint_recycler_view
+            adapter = HintAdapter(context, view.class_searched.text.toString(), view.class_searched)
             recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.setHasFixedSize(true)
         }
         return view
     }

@@ -168,11 +168,10 @@ class MainActivity : AppCompatActivity(),
 
     override fun onClassSearched(classSearched: String) {
         findCourse(classSearched)
-        Log.d("AAA", course.toString())
-        Log.d("AAA", department.toString())
-        if (department != null) {
-            goToCoursePage(department, course)
-        }
+
+//        if (department != null && course != null) {
+//            goToCoursePage(department, course)
+//        }
     }
 
     private fun findCourse(classSearched: String) {
@@ -186,17 +185,22 @@ class MainActivity : AppCompatActivity(),
                 for (doc in documents) {
                     course = Course.fromSnapshot(doc)
                 }
-            }
-        val deptRef: CollectionReference = FirebaseFirestore
-            .getInstance()
-            .collection("Department")
+                val deptRef: CollectionReference = FirebaseFirestore
+                    .getInstance()
+                    .collection("Department")
 
-        deptRef.whereEqualTo("abbr", course?.dept)
-            .get()
-            .addOnSuccessListener { documents->
-                for (doc in documents) {
-                    department = Department.fromSnapshot(doc)
-                }
+                deptRef.whereEqualTo("abbr", course?.dept)
+                    .get()
+                    .addOnSuccessListener { documents->
+                        for (doc in documents) {
+                            department = Department.fromSnapshot(doc)
+                        }
+                        Log.d("AAA", course.toString())
+                        Log.d("AAA", department.toString())
+                        goToCoursePage(department, course)
+
+                    }
+
             }
 
     }
