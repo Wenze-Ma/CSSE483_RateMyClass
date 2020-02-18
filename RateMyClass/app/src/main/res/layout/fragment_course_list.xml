@@ -14,9 +14,9 @@
         android:textSize="24sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/course_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/dept_text_view"
-        android:background="@android:color/darker_gray"/>
+    android:id="@+id/course_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/dept_text_view"
+    android:background="@android:color/darker_gray"/>
 </RelativeLayout>

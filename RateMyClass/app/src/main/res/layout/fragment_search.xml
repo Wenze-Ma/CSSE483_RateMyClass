@@ -13,6 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textSize="36sp"
+        android:id="@+id/class_search_title"
         android:layout_margin="10dp"
         />
 
@@ -32,7 +33,13 @@
         android:layout_height="wrap_content"
         android:text="@string/submit"
         android:layout_below="@+id/class_searched"
-        android:layout_alignRight="@+id/class_searched"
-        />
+        android:layout_alignRight="@+id/class_searched" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hint_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submit"
+        android:background="@android:color/white"/>
 
 </RelativeLayout>
