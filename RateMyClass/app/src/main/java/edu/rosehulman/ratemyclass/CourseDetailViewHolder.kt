@@ -6,10 +6,12 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.comment_view.view.*
 import kotlinx.android.synthetic.main.like_dislike_layout.view.*
+import kotlinx.android.synthetic.main.profile_view.view.*
 import kotlinx.android.synthetic.main.ratings_layout.view.*
-import org.w3c.dom.Text
 
 class CourseDetailViewHolder(itemView: View, adapter: CourseDetailAdapter) :
     RecyclerView.ViewHolder(itemView) {
@@ -24,6 +26,11 @@ class CourseDetailViewHolder(itemView: View, adapter: CourseDetailAdapter) :
     private val dislike = itemView.dislike_count as TextView
     private val like_button = itemView.like_button as ImageView
     private val dislike_button = itemView.dislike_button as ImageView
+    private val author_image = itemView.author_image as ImageView
+
+    private var usersRef: CollectionReference = FirebaseFirestore
+        .getInstance()
+        .collection("User")
 
     init {
         itemView.like_button.setOnClickListener {
@@ -53,6 +60,15 @@ class CourseDetailViewHolder(itemView: View, adapter: CourseDetailAdapter) :
             dislike_button.setImageResource(R.drawable.ic_thumb_down_red_24dp)
         } else {
             dislike_button.setImageResource(R.drawable.ic_thumb_down_gray_24dp)
+        }
+        usersRef.get().addOnSuccessListener {
+            for (doc in it) {
+                val userInfo = UserInfo.fromSnapshot(doc)
+                if (userInfo.username == comment.author) {
+                    val imageUrl = userInfo.imageUrl
+                    GetImageTask(author_image).execute(imageUrl)
+                }
+            }
         }
     }
 }

@@ -37,4 +37,5 @@
     <string name="comments_you_have_posted">Comments you have posted:</string>
     <string name="error_msg_1">You are required to sign in before posting a comment. Do you want to log in now?</string>
     <string name="error_msg_2">You are required to sign in before doing this. Do you want to log in now?</string>
+    <string name="edit_profile_image">Edit profile image</string>
 </resources>

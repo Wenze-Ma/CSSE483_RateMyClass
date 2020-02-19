@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-data class UserInfo (var username: String = "", var picture: Int = -1): Parcelable {
+data class UserInfo (var username: String = "", var imageUrl: String = ""): Parcelable {
 
     @get:Exclude
     var id = ""
