@@ -1,12 +1,21 @@
 package edu.rosehulman.ratemyclass
 
+import android.app.AlertDialog
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.ActionMode
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -188,9 +197,22 @@ class MainActivity : AppCompatActivity(),
                         for (doc in documents) {
                             department = Department.fromSnapshot(doc)
                         }
-                        Log.d("AAA", course.toString())
-                        Log.d("AAA", department.toString())
-                        goToCoursePage(department, course)
+                        if (classSearched != "" && (course == null || department == null)) {
+                            val builder = AlertDialog.Builder(this)
+                            builder.setTitle("Course Not Found")
+
+                            val view = LayoutInflater.from(this).inflate(R.layout.not_found_view, null, false)
+                            builder.setView(view)
+
+                            builder.setPositiveButton(android.R.string.ok) {_,_ ->
+
+                            }
+
+                            builder.setNegativeButton(android.R.string.cancel, null)
+                            builder.create().show()
+                        } else if (course != null || department != null){
+                            goToCoursePage(department, course)
+                        }
                     }
 
             }
@@ -208,5 +230,37 @@ class MainActivity : AppCompatActivity(),
 
     override fun onOKButtonPressed() {
         goToProfilePage()
+    }
+
+    override fun sendNotification() {
+        var builder = NotificationCompat.Builder(this, "CHANNEL_ID")
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Title")
+            .setContentText("Content")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        createNotificationChannel()
+
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(0, builder.build())
+        }
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Channel Name"
+            val descriptionText = "Channel description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("CHANNEL_ID", name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }

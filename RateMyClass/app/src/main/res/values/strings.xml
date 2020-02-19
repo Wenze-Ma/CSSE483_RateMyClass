@@ -38,4 +38,5 @@
     <string name="error_msg_1">You are required to sign in before posting a comment. Do you want to log in now?</string>
     <string name="error_msg_2">You are required to sign in before doing this. Do you want to log in now?</string>
     <string name="edit_profile_image">Edit profile image</string>
+    <string name="the_course_does_not_exist">The course does not exist</string>
 </resources>

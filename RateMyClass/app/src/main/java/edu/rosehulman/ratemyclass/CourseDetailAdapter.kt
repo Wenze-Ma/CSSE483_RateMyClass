@@ -104,6 +104,7 @@ class CourseDetailAdapter (var context: Context,
 
     private fun add(comment: Comment) {
         commentsRef.add(comment)
+        listener?.sendNotification()
     }
 
     fun showErrorDialog(type: Int) {

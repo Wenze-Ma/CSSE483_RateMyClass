@@ -91,5 +91,6 @@ class CourseDetailFragment: Fragment() {
 
     interface OnOKButtonPressed {
         fun onOKButtonPressed()
+        fun sendNotification()
     }
 }
